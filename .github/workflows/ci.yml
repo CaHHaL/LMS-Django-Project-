@@ -13,7 +13,7 @@ jobs:
         image: postgres:18
         env:
           POSTGRES_USER: lms_user
-          POSTGRES_PASSWORD: Test@123
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: lms_db
           
         ports:
@@ -23,7 +23,15 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          
+    env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DB_ENGINE: django.db.backends.postgresql
+        DB_NAME: lms_db
+        DB_USER: lms_user
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: db
+        DB_PORT: 5432
+  
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
