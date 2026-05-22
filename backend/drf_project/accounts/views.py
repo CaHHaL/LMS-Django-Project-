@@ -44,8 +44,7 @@ class LoginView(APIView):
             httponly=True,
             secure=True, # Make True in production
             samesite='None',
-            path='/',
-            domain='lms-backend-sg8r.onrender.com'
+            path='/'
         )
 
         response.set_cookie(
@@ -54,8 +53,7 @@ class LoginView(APIView):
             httponly=True,
             secure=True,
             samesite='None',
-            path='/',
-            domain='lms-backend-sg8r.onrender.com'
+            path='/'
         )
 
         return response
