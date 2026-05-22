@@ -24,8 +24,6 @@ class DashboardView(APIView):
 
 
 class LoginView(APIView):
-    permission_classes = [AllowAny]
-    
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -33,29 +31,31 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
 
         if not user:
-            return Response({"detail": "Invalid credentials"}, status=401)
+            return Response({"error": "Invalid credentials"}, status=401)
         
         refresh = RefreshToken.for_user(user) # fetch the refresh and access token for the user
         access = refresh.access_token
 
-        response = Response({
-            "message": "Login Successful",
-            "access_token": str(access),
-            "refresh_token": str(refresh)
-        }, status=200)
+        response = Response({"message": "Login Successful"})
 
         response.set_cookie(
             key="access_token",
             value=str(access),
             httponly=True,
-            secure=False # Make True in production
+            secure=True, # Make True in production
+            samesite='None',
+            path='/',
+            domain='lms-backend-sg8r.onrender.com'
         )
 
         response.set_cookie(
             key="refresh_token",
             value=str(refresh),
             httponly=True,
-            secure=False
+            secure=True,
+            samesite='None',
+            path='/',
+            domain='lms-backend-sg8r.onrender.com'
         )
 
         return response
@@ -77,7 +77,9 @@ class RefreshView(APIView):
                 key='access_token',
                 value=str(access),
                 httponly=True,
-                secure=False
+                secure=True,
+                samesite='None',
+                path='/'
             )
 
             return response
