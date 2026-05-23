@@ -152,15 +152,15 @@ CORS_ALLOW_CREDENTIALS = True # Allows the browser to send cookies along with cr
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
-    "https://lms-frontend-cuhs.onrender.com",
-    config('FRONTEND_URL', default='http://localhost:5173')
+    "https://*.onrender.com"
 ]
 
-# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://lms-frontend-cuhs.onrender.com",
-    config('FRONTEND_URL', default='http://localhost:5173')
+    "http://localhost:5173"
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.onrender\.com$",
 ]
 
 CSRF_COOKIE_SECURE = config('SECURE_COOKIES', default=True, cast=bool)
