@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import axios from "axios"
+import axiosInstance from '../axiosInstance'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
@@ -20,7 +20,7 @@ const Register = () => {
 
     try {
         // POST request to django backend
-        const response = await axios.post("http://localhost:8000/api/v1/register/", userData)
+        const response = await axiosInstance.post("/api/v1/register/", userData)
         console.log("Response Data is: ", response.data)
         console.log("Registration successful")
         setErrors({})

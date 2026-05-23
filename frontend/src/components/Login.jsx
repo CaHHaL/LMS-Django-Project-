@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from "axios"
+import axiosInstance from '../axiosInstance'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import AuthProvider, { AuthContext } from '../AuthProvider'
@@ -25,7 +25,7 @@ const Login = () => {
 
     try {
         // POST request to django backend
-        await axios.post("http://localhost:8000/api/v1/login/", userData, {withCredentials:true})
+        await axiosInstance.post("/api/v1/login/", userData)
         console.log("Login successful")
         setIsLoggedIn(true)
         navigate('/dashboard') // Navigate to Dashboard page
